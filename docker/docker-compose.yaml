@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+  mysql:
+    image: mysql:5.7  #https://hub.docker.com/_/mysql
+    environment:
+      MYSQL_DATABASE: app # esta base de datos será creada al inicio del contenedor
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 8306:3306
+    restart: always
+    volumes:
+      - dbdata:/var/lib/mysql:z   #carpeta en donde se guarda la base de datos
+      - ../sql:/docker-entrypoint-initdb.d:z  #ejecutará automáticamente los scripts sql que existan en esta carpeta
+
+  adminer:
+    #indica en la página de login, localhost: mysql
+    image: adminer
+    restart: always
+    ports:
+      - 8888:8080
+    links:
+      - mysql
+
+volumes:
+  dbdata: #volume en donde se guardará la base de datos
