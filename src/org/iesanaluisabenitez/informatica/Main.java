@@ -13,6 +13,7 @@ public class Main {
                 "root")) {
 
             Scanner scanner = new Scanner(System.in);
+            System.out.print("buscar por título: ");
             String title = scanner.next();
             String sql = "select * from film where title like '%" + title + "%'";
 
